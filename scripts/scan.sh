@@ -20,7 +20,7 @@ github-pat	\bgithub_pat_[A-Za-z0-9_]{20,}\b
 openai-anthropic-key	\bsk-(ant-)?[A-Za-z0-9_-]{20,}\b
 aws-access-key-id	\bAKIA[0-9A-Z]{16}\b
 slack-token	\bxox[baprs]-[A-Za-z0-9-]{10,}\b
-google-api-key	\bAIza[0-9A-Za-z_-]{35}\b
+google-api-key	\bAIza[0-9A-Za-z_-]{35}
 private-key-block	BEGIN[A-Z ]+PRIVATE KEY
 jwt	\beyJ[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}
 aws-secret-access-key	aws_secret_access_key[[:space:]]*=[[:space:]]*[A-Za-z0-9/+]{40}
