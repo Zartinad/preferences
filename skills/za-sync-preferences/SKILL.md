@@ -1,6 +1,6 @@
 ---
 name: za-sync-preferences
-description: Shows pending changes in the version-controlled Claude config repo(s) that ~/.claude symlinks into (skills, settings, cursor.md), scans them for secrets and private/identifying content, then commits and pushes on confirm. Invoke with /za-sync-preferences after editing a personal skill or config, or apply it proactively at the end of a session that changed one.
+description: Shows pending changes in the version-controlled Claude config repo(s) that ~/.claude symlinks into (skills, settings, CLAUDE.md), scans them for secrets and private/identifying content, then commits and pushes on confirm. Invoke with /za-sync-preferences after editing a personal skill or config, or apply it proactively at the end of a session that changed one.
 ---
 
 # za-sync-preferences
@@ -16,7 +16,7 @@ Resolve the real paths behind the symlinked config entries and find the git repo
 lives in:
 
 ```sh
-for p in ~/.claude/skills ~/.claude/settings.json ~/cursor.md ~/.claude/cursor.md; do
+for p in ~/.claude/skills ~/.claude/settings.json ~/.claude/CLAUDE.md; do
   [ -e "$p" ] && git -C "$(dirname "$(readlink -f "$p")")" rev-parse --show-toplevel 2>/dev/null
 done | sort -u
 ```
@@ -97,7 +97,8 @@ If the user asked for a subset, stage just those paths (`git add <paths>`) inste
 ## When to trigger
 
 Apply proactively at the end of a session that created or edited anything under
-`~/.claude/skills/`, changed `~/.claude/settings.json`, or edited a `cursor.md` that lives
-in one of these repos — don't wait for an explicit `/za-sync-preferences`. The motivating
-case: a session that built the `preferences` repo and immediately started adding skills to
-it, where each skill edit would otherwise be left uncommitted and unpushed.
+`~/.claude/skills/`, changed `~/.claude/settings.json`, or edited the `CLAUDE.md` that
+lives in one of these repos — don't wait for an explicit `/za-sync-preferences`. The
+motivating case: a session that built the `preferences` repo and immediately started
+adding skills to it, where each skill edit would otherwise be left uncommitted and
+unpushed.

@@ -1,25 +1,24 @@
 ---
 name: za-reflect
-description: Reflects on the current conversation to propose updates to the user's personal cursor.md preferences file and suggest new Claude Code skills based on observed habits. Invoke with /za-reflect at the end of a session or work stretch worth learning from.
+description: Reflects on the current conversation to propose updates to the user's personal ~/.claude/CLAUDE.md preferences file and suggest new Claude Code skills based on observed habits. Invoke with /za-reflect at the end of a session or work stretch worth learning from.
 ---
 
 # za-reflect
 
 Turns the current conversation into two concrete outputs: (1) a proposed diff to the
-user's personal `cursor.md` preferences file, and (2) a short list of new skills worth
-building, both grounded in things actually observed in this session — not generic advice.
+user's personal `~/.claude/CLAUDE.md` preferences file, and (2) a short list of new skills
+worth building, both grounded in things actually observed in this session — not generic
+advice.
 
-## Step 1: Locate `cursor.md`
+## Step 1: Locate the preferences file
 
-Check, in order, and use the first that exists:
-1. `./cursor.md` (current project root)
-2. `~/cursor.md`
-3. `~/.claude/cursor.md`
-4. `~/.cursor/cursor.md`
+The target is `~/.claude/CLAUDE.md` — the global personal-preferences file Claude Code
+auto-loads into every session. It is normally a symlink into the version-controlled
+config repo (`~/dev/preferences/CLAUDE.md`); edit it through the symlink.
 
-If none exist, treat `~/cursor.md` as the target and say up front that it doesn't exist
-yet and will be created fresh — don't ask the user to pick a path, just proceed with that
-default.
+If it doesn't exist yet, say so up front and treat `~/.claude/CLAUDE.md` as the target to
+be created fresh — don't ask the user to pick a path. (Do not use the name `cursor.md`;
+that was an earlier convention borrowed from the Cursor editor and is no longer used.)
 
 ## Step 2: Mine the conversation for signal
 
@@ -40,9 +39,9 @@ are *specific and repeated*, not one-off asks. Good signal looks like:
   out in the existing codebase that should be matched going forward.
 
 Ignore anything that's a one-off, project-specific detail with no generalizable habit
-behind it (that belongs in the project's `CLAUDE.md`, not a personal `cursor.md`).
+behind it (that belongs in the project's own `CLAUDE.md`, not the personal one).
 
-## Step 3: Draft the `cursor.md` diff
+## Step 3: Draft the `CLAUDE.md` diff
 
 Organize proposed additions/edits under short headings (e.g. `## Working style`,
 `## Verification habits`, `## Communication preferences`). For each proposed line:
@@ -50,7 +49,7 @@ Organize proposed additions/edits under short headings (e.g. `## Working style`,
 - Keep a mental note of *why* (the transcript evidence) so you can justify it if asked,
   but don't pad the file itself with rationale — keep entries terse.
 - Prefer editing/tightening an existing line over piling on a near-duplicate one, if
-  `cursor.md` already exists.
+  `~/.claude/CLAUDE.md` already has content.
 
 ## Step 4: Suggest new skills
 
@@ -65,16 +64,16 @@ via memory) that motivated it.
 Before proposing a skill, check whether it already exists under `~/.claude/skills/` — if
 so, don't pitch it as new; either drop it or list it under a short "run this" note. In
 particular, if this session created or edited anything under `~/.claude/skills/`, changed
-`~/.claude/settings.json`, or edited a version-controlled `cursor.md`, remind the user to
+`~/.claude/settings.json`, or edited the version-controlled `CLAUDE.md`, remind the user to
 run `/za-sync-preferences` to commit and push those changes — including when applying the
-`cursor.md` diff from this reflection would itself dirty that repo.
+`CLAUDE.md` diff from this reflection would itself dirty that repo.
 
 ## Step 5: Present, don't silently apply
 
-Show the user the proposed `cursor.md` diff and the skill suggestions as a review — do
+Show the user the proposed `CLAUDE.md` diff and the skill suggestions as a review — do
 not write the file yet. Ask (a single round, not per-line) whether to apply the diff as-is,
-apply a subset, or skip. Only write to `cursor.md` (creating it if it doesn't exist) once
-the user confirms. If the user also wants one of the suggested skills built, build it the
-same way this skill itself was built: a `SKILL.md` with frontmatter under
+apply a subset, or skip. Only write to `~/.claude/CLAUDE.md` (creating it if it doesn't
+exist) once the user confirms. If the user also wants one of the suggested skills built,
+build it the same way this skill itself was built: a `SKILL.md` with frontmatter under
 `~/.claude/skills/<name>/` for a personal/cross-project skill, or `.claude/skills/<name>/`
 in the repo for a project-specific one.

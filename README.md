@@ -4,7 +4,8 @@ Version-controlled Claude Code configuration for this account.
 
 ## Contents
 
-- `skills/` — personal Claude Code skills (`za-explain`, `za-reflect`, `za-verify-script`, `za-sync-preferences`)
+- `skills/` — personal Claude Code skills (`za-explain`, `za-reflect`, `za-start`, `za-capture-design`, `za-verify-script`, `za-sync-preferences`)
+- `CLAUDE.md` — global personal preferences, auto-loaded into every Claude Code session
 - `settings.json` — global Claude Code settings
 - `scripts/scan.sh` — deterministic secret / privacy scan (see below)
 - `.githooks/pre-commit` — runs `scan.sh` before every commit
@@ -18,13 +19,15 @@ cd ~/dev/preferences && git config core.hooksPath .githooks   # enable the pre-c
 # back up anything already there, then symlink
 mv ~/.claude/skills ~/.claude/skills.bak 2>/dev/null || true
 mv ~/.claude/settings.json ~/.claude/settings.json.bak 2>/dev/null || true
+mv ~/.claude/CLAUDE.md ~/.claude/CLAUDE.md.bak 2>/dev/null || true
 
 ln -s ~/dev/preferences/skills ~/.claude/skills
 ln -s ~/dev/preferences/settings.json ~/.claude/settings.json
+ln -s ~/dev/preferences/CLAUDE.md ~/.claude/CLAUDE.md
 ```
 
-The live `~/.claude/skills` and `~/.claude/settings.json` are symlinks into this
-repo, so edits made through Claude Code are tracked here directly.
+The live `~/.claude/skills`, `~/.claude/settings.json`, and `~/.claude/CLAUDE.md` are
+symlinks into this repo, so edits made through Claude Code are tracked here directly.
 
 ## Secret / privacy scan
 
