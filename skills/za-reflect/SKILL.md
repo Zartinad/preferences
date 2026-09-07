@@ -62,6 +62,13 @@ project-specific one. For each: the `/za-name`, one sentence on what it would au
 enforce, and the specific moment(s) in this conversation (or past sessions, if recalled
 via memory) that motivated it.
 
+Before proposing a skill, check whether it already exists under `~/.claude/skills/` — if
+so, don't pitch it as new; either drop it or list it under a short "run this" note. In
+particular, if this session created or edited anything under `~/.claude/skills/`, changed
+`~/.claude/settings.json`, or edited a version-controlled `cursor.md`, remind the user to
+run `/za-sync-preferences` to commit and push those changes — including when applying the
+`cursor.md` diff from this reflection would itself dirty that repo.
+
 ## Step 5: Present, don't silently apply
 
 Show the user the proposed `cursor.md` diff and the skill suggestions as a review — do
